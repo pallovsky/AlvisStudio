@@ -3,10 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarDropdownComponent } from './navbar/navbar-dropdown/navbar-dropdown.component';
+import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.component';
+import { CodeEditorComponent } from './code-editor/code-editor.component';
+import { GraphicalEditorComponent } from './graphical-editor/graphical-editor.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    NavbarDropdownComponent,
+    HierarchyTreeComponent,
+    CodeEditorComponent,
+    GraphicalEditorComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
