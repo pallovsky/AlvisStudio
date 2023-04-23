@@ -1,11 +1,10 @@
 .container-code-editor {
-  height: 25vw;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
-textarea {
-  height: 90%;
+.app-ace-editor {
+  height: 100%;
   width: 100%;
-  max-height: 90%;
-  box-sizing: border-box;
-  background-color: darkgrey;
 }
