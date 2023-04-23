@@ -1,5 +1,10 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .horizontal-line {
   border-top: 1px solid black
 }

@@ -8,7 +8,7 @@ import { NavbarDropdownComponent } from './navbar/navbar-dropdown/navbar-dropdow
 import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.component';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { GraphicalEditorComponent } from './graphical-editor/graphical-editor.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MainViewComponent } from './main-view/main-view.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     HierarchyTreeComponent,
     CodeEditorComponent,
     GraphicalEditorComponent,
-    ToolbarComponent
+    MainViewComponent
   ],
   imports: [
     BrowserModule,
