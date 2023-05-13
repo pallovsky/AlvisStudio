@@ -9,6 +9,8 @@ import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.componen
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { GraphicalEditorComponent } from './graphical-editor/graphical-editor.component';
 import { MainViewComponent } from './main-view/main-view.component';
+import { DiagramComponent } from './graphical-editor/diagram/diagram.component';
+import { InspectorComponent } from './graphical-editor/inspector/inspector.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MainViewComponent } from './main-view/main-view.component';
     HierarchyTreeComponent,
     CodeEditorComponent,
     GraphicalEditorComponent,
-    MainViewComponent
+    MainViewComponent,
+    DiagramComponent,
+    InspectorComponent
   ],
   imports: [
     BrowserModule,
