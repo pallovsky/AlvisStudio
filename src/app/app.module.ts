@@ -11,6 +11,7 @@ import { GraphicalEditorComponent } from './graphical-editor/graphical-editor.co
 import { MainViewComponent } from './main-view/main-view.component';
 import { DiagramComponent } from './graphical-editor/diagram/diagram.component';
 import { InspectorComponent } from './graphical-editor/inspector/inspector.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -24,10 +25,11 @@ import { InspectorComponent } from './graphical-editor/inspector/inspector.compo
     DiagramComponent,
     InspectorComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
