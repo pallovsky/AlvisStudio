@@ -21,8 +21,6 @@
     "@popperjs/core": "^2.11.7",
     "ace-builds": "^1.18.0",
     "bootstrap": "^5.2.3",
-    "gojs": "^2.3.7",
-    "gojs-angular": "^2.0.6",
     "http-server": "^14.1.1",
     "jquery": "^3.6.4",
     "popper.js": "^1.16.1",
