@@ -12,6 +12,9 @@ import {MainViewComponent} from './main-view/main-view.component';
 import {DiagramComponent} from './graphical-editor/diagram/diagram.component';
 import {NgOptimizedImage} from "@angular/common";
 import {AddAgentModalComponent} from './graphical-editor/diagram/add-agent-modal/add-agent-modal.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ReactiveFormsModule} from "@angular/forms";
+import { AddPortModalComponent } from './graphical-editor/diagram/add-port-modal/add-port-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,16 @@ import {AddAgentModalComponent} from './graphical-editor/diagram/add-agent-modal
     GraphicalEditorComponent,
     MainViewComponent,
     DiagramComponent,
-    AddAgentModalComponent
+    AddAgentModalComponent,
+    AddPortModalComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgOptimizedImage,
+    NgbModule,
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

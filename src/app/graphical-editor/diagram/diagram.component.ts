@@ -1,6 +1,8 @@
 import {Component, OnInit, Output} from '@angular/core';
-
-const joint = require('../../../../node_modules/jointjs/dist/joint.js');
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AddAgentModalComponent} from "./add-agent-modal/add-agent-modal.component";
+import {AddPortModalComponent} from "./add-port-modal/add-port-modal.component";
+import {dia, shapes} from "jointjs"
 
 @Component({
   selector: 'app-diagram',
@@ -8,10 +10,12 @@ const joint = require('../../../../node_modules/jointjs/dist/joint.js');
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements OnInit {
-  @Output() graph = null
+  @Output() graph: dia.Graph
+
+  constructor(private modalService: NgbModal) {
+  }
 
   ngOnInit(): void {
-    const {dia, shapes} = joint;
     this.graph = new dia.Graph({}, {cellNamespace: shapes});
 
     const paper = new dia.Paper({
@@ -29,55 +33,13 @@ export class DiagramComponent implements OnInit {
   }
 
   addAgent(type: string): void {
-    // const modalRef = this.modalService.open(ModalContentComponent);
-    // modalRef.componentInstance.user = this.user;
+    const modalRef = this.modalService.open(AddAgentModalComponent);
+    modalRef.componentInstance.graph = this.graph;
+    modalRef.componentInstance.type = type
   }
 
-  addActiveAgent() {
-    let rect = new joint.shapes.standard.Ellipse();
-    rect.position(100, 30);
-    rect.resize(100, 40);
-    rect.attr({
-      body: {
-        fill: '#C2DEDC'
-      },
-      label: {
-        text: 'Active',
-        fill: 'white'
-      }
-    });
-    rect.addTo(this.graph);
-  }
-
-  addPassiveAgent() {
-    let rect = new joint.shapes.standard.Rectangle();
-    rect.position(100, 30);
-    rect.resize(100, 40);
-    rect.attr({
-      body: {
-        fill: '#ECE5C7'
-      },
-      label: {
-        text: 'Passive',
-        fill: 'white'
-      }
-    });
-    rect.addTo(this.graph);
-  }
-
-  addHierarchicalAgent() {
-    let rect = new joint.shapes.standard.Rectangle();
-    rect.position(100, 30);
-    rect.resize(100, 40);
-    rect.attr({
-      body: {
-        fill: '#CDC2AE'
-      },
-      label: {
-        text: 'Hierarchical',
-        fill: 'white'
-      }
-    });
-    rect.addTo(this.graph);
+  addPort(): void {
+    const modalRef = this.modalService.open(AddPortModalComponent);
+    modalRef.componentInstance.graph = this.graph;
   }
 }

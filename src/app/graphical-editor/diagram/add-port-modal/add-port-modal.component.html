@@ -2,17 +2,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add agent</h5>
+        <h5 class="modal-title">Add port</h5>
         <button type="button" class="btn-close" (click)="onClose()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p>Choose name of the agent:</p>
-        <form [formGroup]="agentNameForm">
+        <form [formGroup]="portForm">
           <div class="form-group">
-            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter name">
-          </div>
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger mt-1">
-              Name is required.
+            <select formControlName="agentName" class="form-select" aria-label="Disabled select example">
+              <option *ngFor="let agentName of agentNames" [ngValue]="agentName">
+                {{ agentName }}
+              </option>
+            </select>
           </div>
         </form>
       </div>

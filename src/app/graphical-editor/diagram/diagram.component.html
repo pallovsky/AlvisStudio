@@ -1,15 +1,15 @@
 <div class="container-diagram">
   <div id="stencil" class="justify-content-center text-center">
     <button class="btn btn-primary menu-button mt-3" (click)="addAgent('active')">Active agent</button>
-    <button class="btn btn-primary menu-button mt-3" (click)="addPassiveAgent()">Passive agent</button>
-    <button class="btn btn-primary menu-button mt-3" (click)="addHierarchicalAgent()">Hierarchical agent</button>
+    <button class="btn btn-primary menu-button mt-3" (click)="addAgent('passive')">Passive agent</button>
+    <button class="btn btn-primary menu-button mt-3" (click)="addAgent('hierarchical')">Hierarchical agent</button>
     <div class="line mt-3"></div>
-    <button class="btn btn-secondary menu-button mt-3" (click)="addActiveAgent()">Add port</button>
-    <button class="btn btn-secondary menu-button mt-3" (click)="addPassiveAgent()">Add connection</button>
+    <button class="btn btn-secondary menu-button mt-3" (click)="addPort()">Add port</button>
+    <button class="btn btn-secondary menu-button mt-3" >Add connection</button>
     <div class="line mt-3"></div>
-    <button class="btn btn-danger menu-button mt-3" (click)="addActiveAgent()">Delete agent</button>
-    <button class="btn btn-danger menu-button mt-3" (click)="addActiveAgent()">Delete port</button>
-    <button class="btn btn-danger  menu-button mt-3" (click)="addPassiveAgent()">Delete connection</button>
+    <button class="btn btn-danger menu-button mt-3" >Delete agent</button>
+    <button class="btn btn-danger menu-button mt-3">Delete port</button>
+    <button class="btn btn-danger  menu-button mt-3">Delete connection</button>
   </div>
   <div id="paper"></div>
   <a target="_blank" href="https://www.jointjs.com">
