@@ -18,7 +18,7 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
-    "@popperjs/core": "^2.11.7",
+    "@popperjs/core": "^2.11.8",
     "ace-builds": "^1.18.0",
     "bootstrap": "^5.2.3",
     "http-server": "^14.1.1",
