@@ -9,7 +9,22 @@
         <p>Choose name of the agent:</p>
         <form [formGroup]="portForm">
           <div class="form-group">
-            <select formControlName="agentName" class="form-select" aria-label="Disabled select example">
+            <input formControlName="portName" type="text" class="form-control" id="portName" placeholder="Enter port name">
+          </div>
+          <div *ngIf="portName.invalid && (portName.dirty || portName.touched)" class="alert alert-danger mt-1">
+            Port name is required.
+          </div>
+          <div class="form-group mt-2">
+            <label for="position">Choose port position</label>
+            <select id="position" formControlName="position" class="form-select" aria-label="Disabled select example">
+              <option *ngFor="let position of positions" [ngValue]="position">
+                {{ position }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="agentName">Choose agent name</label>
+            <select id="agentName" formControlName="agentName" class="form-select" aria-label="Disabled select example">
               <option *ngFor="let agentName of agentNames" [ngValue]="agentName">
                 {{ agentName }}
               </option>

@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-
-const joint = require('../../../../../node_modules/jointjs/dist/joint.js');
+import {DiagramShapes} from "../../../_models/diagram-shapes";
+import {shapes} from "jointjs"
 
 @Component({
   selector: 'app-add-agent-modal',
@@ -15,15 +15,16 @@ export class AddAgentModalComponent {
 
   constructor(private modal: NgbActiveModal) {}
 
-  agentNameForm = new FormGroup({
+  diagramShapes: DiagramShapes = new DiagramShapes()
+  agentNameForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
   });
 
   onAdd(): void {
-    let rect = new joint.shapes.standard.Rectangle();
-
+    let rect = new shapes.standard.Rectangle();
     rect.position(100, 30);
-    rect.resize(150, 60);
+    rect.resize(200, 100);
+    // @ts-ignore
     rect.attr(this.getAttributes());
     rect.addTo(this.graph);
     this.modal.close()
@@ -33,35 +34,11 @@ export class AddAgentModalComponent {
     let agentName: string = this.agentNameForm.value.name
     switch (this.type) {
       case 'active':
-        return {
-          body: {
-            fill: '#C2DEDC'
-          },
-          label: {
-            text: agentName,
-            fill: 'white'
-          }
-        };
+        return this.diagramShapes.ACTIVE_AGENT(agentName);
       case 'passive':
-        return {
-          body: {
-            fill: '#ECE5C7'
-          },
-          label: {
-            text: agentName,
-            fill: 'white'
-          }
-        }
+        return this.diagramShapes.PASSIVE_AGENT(agentName);
       case 'hierarchical':
-        return {
-          body: {
-            fill: '#CDC2AE'
-          },
-          label: {
-            text: agentName,
-            fill: 'white'
-          }
-        }
+        return this.diagramShapes.HIERARCHICAL_AGENT(agentName);
       default:
         return {}
     }
