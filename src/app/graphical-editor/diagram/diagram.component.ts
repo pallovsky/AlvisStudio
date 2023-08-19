@@ -3,6 +3,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddAgentModalComponent} from "./add-agent-modal/add-agent-modal.component";
 import {AddPortModalComponent} from "./add-port-modal/add-port-modal.component";
 import {dia, shapes} from "jointjs"
+import {DiagramShapes} from "../../_models/diagram-shapes";
 
 @Component({
   selector: 'app-diagram',
@@ -34,29 +35,39 @@ export class DiagramComponent implements OnInit {
       linkPinning: false,
     });
 
-    paper.on('cell:pointerdown', (cellView: dia.CellView): void => {
+    //some test agents
+    let diagramShapes = new DiagramShapes()
+    let agent = diagramShapes.AGENT('passive', 'Agent1')
+    let port1 = diagramShapes.PORT('port1', 'left')
+    let port2 = diagramShapes.PORT('port2', 'right')
+    agent.addPorts([port1, port2])
+    agent.addTo(this.graph)
+
+    paper.on('cell:pointerclick', (cellView: dia.CellView, event: dia.Event): void => {
+      let isPort: boolean = $(event.target).attr('port') != null
       if (this.selectedAgent) this.selectedAgent.unhighlight()
-      if (this.selectedPort) this.selectedPort.unhighlight()
-      cellView.highlight()
-      this.selectedAgent = cellView;
+      if (this.selectedPort) this.changePortColor(this.selectedPort.id, '#023047')
+
+      if (isPort) {
+        let portId: string = $(event.target).attr('port');
+        this.changePortColor(portId, '#fbb76b')
+      } else {
+        cellView.highlight()
+        this.selectedAgent = cellView;
+      }
     });
 
-    paper.on('blank:pointerdown', (_: dia.Event): void => {
+    paper.on('blank:pointerclick', (_: dia.Event): void => {
         if (this.selectedAgent) {
           this.selectedAgent.unhighlight()
           this.selectedAgent = null
         }
         if (this.selectedPort) {
-          this.selectedPort.unhighlight()
+          this.changePortColor(this.selectedPort.id, '#023047')
           this.selectedPort = null
         }
       }
     )
-
-    paper.on('element:magnet:pointerdown', (elementView: dia.ElementView, event: dia.Event, magnet: SVGElement): void => {
-      elementView.highlight()
-      console.log(elementView)
-    })
 
     document.getElementById("paper").appendChild(paper.el);
   }
@@ -77,6 +88,22 @@ export class DiagramComponent implements OnInit {
   }
 
   removePort() {
-    if (this.selectedPort) this.selectedPort.model.remove();
+    if (this.selectedPort) {
+      let portId = this.selectedPort.id
+      this.graph.getElements().forEach(element => {
+        if (element.hasPort(portId)) {
+          element.removePort(this.selectedPort)
+        }
+      })
+    }
+  }
+
+  changePortColor(portId: string, hex: string): void {
+    this.graph.getElements().forEach(element => {
+      if (element.hasPort(portId)) {
+        element.portProp(portId, 'attrs/portBody/fill', hex)
+        this.selectedPort = element.getPort(portId)
+      }
+    })
   }
 }
