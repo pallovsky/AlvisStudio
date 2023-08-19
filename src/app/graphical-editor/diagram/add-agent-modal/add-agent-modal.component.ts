@@ -21,27 +21,14 @@ export class AddAgentModalComponent {
   });
 
   onAdd(): void {
-    let rect = new shapes.standard.Rectangle();
-    rect.position(100, 30);
-    rect.resize(200, 100);
-    // @ts-ignore
-    rect.attr(this.getAttributes());
+    let rect: shapes.standard.Rectangle = this.getAgent();
     rect.addTo(this.graph);
     this.modal.close()
   }
 
-  getAttributes(): object {
+  getAgent(): shapes.standard.Rectangle {
     let agentName: string = this.agentNameForm.value.name
-    switch (this.type) {
-      case 'active':
-        return this.diagramShapes.ACTIVE_AGENT(agentName);
-      case 'passive':
-        return this.diagramShapes.PASSIVE_AGENT(agentName);
-      case 'hierarchical':
-        return this.diagramShapes.HIERARCHICAL_AGENT(agentName);
-      default:
-        return {}
-    }
+    return this.diagramShapes.AGENT(this.type, agentName)
   }
 
   onClose(): void {
