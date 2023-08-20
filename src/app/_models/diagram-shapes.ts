@@ -2,12 +2,12 @@ import {shapes} from "jointjs";
 import {AgentType} from "./agent-type";
 
 export class DiagramShapes {
-  AGENT(type: AgentType, agentName: string): shapes.standard.Rectangle {
+  AGENT(type: AgentType, agentName: string, x: number = 100, y: number = 30): shapes.standard.Rectangle {
     let hex = this.getAgentColor(type)
     let shape = new shapes.standard.Rectangle({
       position: {
-        x: 100,
-        y: 30
+        x: x,
+        y: y
       },
       size: {
         width: 200,

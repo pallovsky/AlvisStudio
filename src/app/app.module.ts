@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {NavbarDropdownComponent} from './navbar/navbar-dropdown/navbar-dropdown.component';
-import {HierarchyTreeComponent} from './hierarchy-tree/hierarchy-tree.component';
 import {CodeEditorComponent} from './code-editor/code-editor.component';
 import {GraphicalEditorComponent} from './graphical-editor/graphical-editor.component';
 import {MainViewComponent} from './main-view/main-view.component';
@@ -15,13 +14,13 @@ import {AddAgentModalComponent} from './graphical-editor/diagram/add-agent-modal
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from "@angular/forms";
 import { AddPortModalComponent } from './graphical-editor/diagram/add-port-modal/add-port-modal.component';
+import {GraphService} from "./_services/graph.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     NavbarDropdownComponent,
-    HierarchyTreeComponent,
     CodeEditorComponent,
     GraphicalEditorComponent,
     MainViewComponent,
@@ -36,7 +35,7 @@ import { AddPortModalComponent } from './graphical-editor/diagram/add-port-modal
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [GraphService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

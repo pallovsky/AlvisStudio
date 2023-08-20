@@ -12,4 +12,8 @@ export class NavbarDropdownComponent {
   isLastRow(index: number): boolean {
     return index != this.data.dividedOptions.length - 1
   }
+
+  onMenuClick(option: string) {
+    console.log(option)
+  }
 }

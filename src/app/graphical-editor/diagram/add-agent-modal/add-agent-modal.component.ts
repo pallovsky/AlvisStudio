@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {DiagramShapes} from "../../../_models/diagram-shapes";
-import {shapes} from "jointjs"
 import {AgentType} from "../../../_models/agent-type";
+import {GraphService} from "../../../_services/graph.service";
+import {Agent} from "../../../_models/agent";
 
 @Component({
   selector: 'app-add-agent-modal',
@@ -12,24 +12,22 @@ import {AgentType} from "../../../_models/agent-type";
 })
 export class AddAgentModalComponent {
   @Input() type: AgentType
-  @Input() graph
 
-  constructor(private modal: NgbActiveModal) {}
+  constructor(
+    private modal: NgbActiveModal,
+    private graphService: GraphService,
+  ) {
+  }
 
-  diagramShapes: DiagramShapes = new DiagramShapes()
   agentNameForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
   });
 
   onAdd(): void {
-    let rect: shapes.standard.Rectangle = this.getAgent();
-    rect.addTo(this.graph);
-    this.modal.close()
-  }
-
-  getAgent(): shapes.standard.Rectangle {
     let agentName: string = this.agentNameForm.value.name
-    return this.diagramShapes.AGENT(this.type, agentName)
+    let agent: Agent = new Agent(agentName, this.type)
+    this.graphService.addAgent(agent)
+    this.modal.close()
   }
 
   onClose(): void {

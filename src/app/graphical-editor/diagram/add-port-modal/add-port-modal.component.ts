@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {dia} from "jointjs"
 import {DiagramShapes} from "../../../_models/diagram-shapes";
+import {GraphService} from "../../../_services/graph.service";
+import {Port} from "../../../_models/port";
 
 @Component({
   selector: 'app-add-port-modal',
@@ -10,8 +11,6 @@ import {DiagramShapes} from "../../../_models/diagram-shapes";
   styleUrls: ['./add-port-modal.component.scss']
 })
 export class AddPortModalComponent implements OnInit {
-  @Input() graph: dia.Graph
-
   agentNames: string[] = []
   positions: string[] = ['left', 'right', 'top', 'bottom']
   diagramShapes: DiagramShapes = new DiagramShapes()
@@ -22,24 +21,19 @@ export class AddPortModalComponent implements OnInit {
     agentName: new FormControl('', [Validators.required]),
   });
 
-  constructor(private modal: NgbActiveModal) {}
+  constructor(
+    private modal: NgbActiveModal,
+    private graphService: GraphService,
+  ) {}
 
   ngOnInit(): void {
-    this.agentNames = this.graph.getElements().map(element => element.attributes.attrs['label'].text)
+    this.agentNames = this.graphService.getAgentNames()
   }
 
   onAdd(): void {
     let agentName: string = this.portForm.value.agentName
-    let portName: string = this.portForm.value.portName
-    let position: string = this.portForm.value.position
-
-    let port: object = this.diagramShapes.PORT(portName, position)
-    this.graph.getElements().forEach(element => {
-      if (element.attributes.attrs['label'].text == agentName) {
-        element.addPort(port)
-      }
-    })
-
+    let port: Port = new Port(this.portForm.value.portName, this.portForm.value.position)
+    this.graphService.addPort(port, agentName)
     this.modal.close()
   }
 

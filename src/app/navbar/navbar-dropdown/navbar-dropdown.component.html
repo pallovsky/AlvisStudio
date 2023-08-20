@@ -4,7 +4,7 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
     <ng-container *ngFor="let options of data.dividedOptions; index as i">
-      <a class="dropdown-item" href="#" *ngFor="let option of options">{{option}}</a>
+      <a class="dropdown-item" href="#" *ngFor="let option of options" (click)="onMenuClick(option)">{{option}}</a>
       <div class="dropdown-divider" *ngIf="isLastRow(i)"></div>
     </ng-container>
   </div>

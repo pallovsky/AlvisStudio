@@ -1,33 +1,17 @@
 export class NavbarData {
   file: DropdownData = new DropdownData({
       name: 'File',
-      dividedOptions: [['New', 'Open file'], ['Save', 'Save as'], ['Export to EPS', 'Export to SVG', 'Export to PNG'],
-        ['Page setup', 'Print'], ['Preferences'], ['Exit']]
+      dividedOptions: [['New', 'Open file'], ['Save', 'Save as'], ['Preferences']]
     }
   )
-  edit: DropdownData = new DropdownData({
-      name: 'Edit',
-      dividedOptions: [['Undo', 'Redo'], ['Cut', 'Copy', 'Paste'], ['Delete']]
-    }
-  )
-  view: DropdownData = new DropdownData({
-      name: 'View',
-      dividedOptions: [['Page layout', 'Antialias'], ['Grid', 'Rulers'], ['Zoom in', 'Zoom out']]
-    }
-  )
-  format: DropdownData = new DropdownData({
-      name: 'Format',
-      dividedOptions: [['Direct to source', 'Direct to target', 'Undirect'], ['Line']]
-    }
-  )
-  alignment: DropdownData = new DropdownData({
-      name: 'Alignment',
-      dividedOptions: [['Left', 'Center', 'Right'], ['Top', 'Middle', 'Bottom']]
+  export: DropdownData = new DropdownData({
+      name: 'Export',
+      dividedOptions: [['Export to EPS', 'Export to SVG', 'Export to PNG']]
     }
   )
   help: DropdownData = new DropdownData({
       name: 'Help',
-      dividedOptions: [['About Alvis', 'Generate report']]
+      dividedOptions: [['About Alvis', 'Alvis Docs', 'Alvis Studio Docs']]
     }
   )
 }
