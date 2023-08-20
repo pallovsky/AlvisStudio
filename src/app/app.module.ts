@@ -1,16 +1,20 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NavbarDropdownComponent } from './navbar/navbar-dropdown/navbar-dropdown.component';
-import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.component';
-import { CodeEditorComponent } from './code-editor/code-editor.component';
-import { GraphicalEditorComponent } from './graphical-editor/graphical-editor.component';
-import { MainViewComponent } from './main-view/main-view.component';
-import { DiagramComponent } from './graphical-editor/diagram/diagram.component';
-import { InspectorComponent } from './graphical-editor/inspector/inspector.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {NavbarComponent} from './navbar/navbar.component';
+import {NavbarDropdownComponent} from './navbar/navbar-dropdown/navbar-dropdown.component';
+import {HierarchyTreeComponent} from './hierarchy-tree/hierarchy-tree.component';
+import {CodeEditorComponent} from './code-editor/code-editor.component';
+import {GraphicalEditorComponent} from './graphical-editor/graphical-editor.component';
+import {MainViewComponent} from './main-view/main-view.component';
+import {DiagramComponent} from './graphical-editor/diagram/diagram.component';
+import {NgOptimizedImage} from "@angular/common";
+import {AddAgentModalComponent} from './graphical-editor/diagram/add-agent-modal/add-agent-modal.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ReactiveFormsModule} from "@angular/forms";
+import { AddPortModalComponent } from './graphical-editor/diagram/add-port-modal/add-port-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +26,18 @@ import { InspectorComponent } from './graphical-editor/inspector/inspector.compo
     GraphicalEditorComponent,
     MainViewComponent,
     DiagramComponent,
-    InspectorComponent
+    AddAgentModalComponent,
+    AddPortModalComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgOptimizedImage,
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
