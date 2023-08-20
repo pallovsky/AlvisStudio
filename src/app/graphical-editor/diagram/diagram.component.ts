@@ -2,8 +2,9 @@ import {Component, OnInit, Output} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddAgentModalComponent} from "./add-agent-modal/add-agent-modal.component";
 import {AddPortModalComponent} from "./add-port-modal/add-port-modal.component";
-import {dia, shapes} from "jointjs"
+import {dia, shapes, linkTools, elementTools} from "jointjs"
 import {DiagramShapes} from "../../_models/diagram-shapes";
+import {ResizeTool} from "../../_models/resize-tool"
 
 @Component({
   selector: 'app-diagram',
@@ -12,7 +13,6 @@ import {DiagramShapes} from "../../_models/diagram-shapes";
 })
 export class DiagramComponent implements OnInit {
   @Output() graph: dia.Graph
-  selectedAgent = null
   selectedPort = null
 
   constructor(private modalService: NgbModal) {
@@ -45,29 +45,79 @@ export class DiagramComponent implements OnInit {
 
     paper.on('cell:pointerclick', (cellView: dia.CellView, event: dia.Event): void => {
       let isPort: boolean = $(event.target).attr('port') != null
-      if (this.selectedAgent) this.selectedAgent.unhighlight()
       if (this.selectedPort) this.changePortColor(this.selectedPort.id, '#023047')
 
       if (isPort) {
         let portId: string = $(event.target).attr('port');
-        this.changePortColor(portId, '#fbb76b')
-      } else {
-        cellView.highlight()
-        this.selectedAgent = cellView;
+        let boundaryTool = new elementTools.Boundary();
+        let removeButton = new elementTools.Remove();
+        let toolsView = new dia.ToolsView({
+          tools: [
+            boundaryTool,
+            removeButton,
+          ]
+        });
+        cellView.addTools(toolsView)
+        this.changePortColor(portId, '#FF0000')
       }
     });
 
     paper.on('blank:pointerclick', (_: dia.Event): void => {
-        if (this.selectedAgent) {
-          this.selectedAgent.unhighlight()
-          this.selectedAgent = null
-        }
+        this.graph.getElements().forEach((element) =>
+          element.findView(paper).removeTools()
+        )
         if (this.selectedPort) {
           this.changePortColor(this.selectedPort.id, '#023047')
           this.selectedPort = null
         }
       }
     )
+
+    paper.on('element:pointerclick', function (elementView) {
+      if (!elementView.hasTools()) {
+        let boundaryTool = new elementTools.Boundary();
+        let removeButton = new elementTools.Remove();
+        let resizeTool = new ResizeTool({selector: "body"})
+
+        let toolsView = new dia.ToolsView({
+          tools: [
+            boundaryTool,
+            removeButton,
+            resizeTool
+          ]
+        });
+
+        elementView.addTools(toolsView);
+      } else {
+        elementView.removeTools()
+      }
+    });
+
+    paper.on('link:mouseenter', function (linkView) {
+      let verticesTool = new linkTools.Vertices();
+      let segmentsTool = new linkTools.Segments();
+      let sourceArrowheadTool = new linkTools.SourceArrowhead();
+      let targetArrowheadTool = new linkTools.TargetArrowhead();
+      let sourceAnchorTool = new linkTools.SourceAnchor();
+      let targetAnchorTool = new linkTools.TargetAnchor();
+      let boundaryTool = new linkTools.Boundary();
+      let removeButton = new linkTools.Remove();
+
+      let toolsView = new dia.ToolsView({
+        tools: [
+          verticesTool, segmentsTool,
+          sourceArrowheadTool, targetArrowheadTool,
+          sourceAnchorTool, targetAnchorTool,
+          boundaryTool, removeButton
+        ]
+      });
+
+      linkView.addTools(toolsView);
+    });
+
+    paper.on('link:mouseleave', function (linkView) {
+      linkView.removeTools();
+    });
 
     document.getElementById("paper").appendChild(paper.el);
   }
@@ -81,10 +131,6 @@ export class DiagramComponent implements OnInit {
   addPort(): void {
     const modalRef = this.modalService.open(AddPortModalComponent);
     modalRef.componentInstance.graph = this.graph;
-  }
-
-  removeAgent() {
-    if (this.selectedAgent) this.selectedAgent.model.remove();
   }
 
   removePort() {
