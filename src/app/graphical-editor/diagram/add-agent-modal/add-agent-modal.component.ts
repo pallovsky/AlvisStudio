@@ -3,6 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DiagramShapes} from "../../../_models/diagram-shapes";
 import {shapes} from "jointjs"
+import {AgentType} from "../../../_models/agent-type";
 
 @Component({
   selector: 'app-add-agent-modal',
@@ -10,7 +11,7 @@ import {shapes} from "jointjs"
   styleUrls: ['./add-agent-modal.component.scss']
 })
 export class AddAgentModalComponent {
-  @Input() type: string
+  @Input() type: AgentType
   @Input() graph
 
   constructor(private modal: NgbActiveModal) {}

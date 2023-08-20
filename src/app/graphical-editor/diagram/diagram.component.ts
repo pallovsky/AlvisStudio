@@ -2,9 +2,10 @@ import {Component, OnInit, Output} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddAgentModalComponent} from "./add-agent-modal/add-agent-modal.component";
 import {AddPortModalComponent} from "./add-port-modal/add-port-modal.component";
-import {dia, shapes, linkTools, elementTools} from "jointjs"
+import {dia, elementTools, linkTools, shapes} from "jointjs"
 import {DiagramShapes} from "../../_models/diagram-shapes";
 import {ResizeTool} from "../../_models/resize-tool"
+import {AgentType} from "../../_models/agent-type";
 
 @Component({
   selector: 'app-diagram',
@@ -33,15 +34,28 @@ export class DiagramComponent implements OnInit {
       background: {color: "#F3F7F6"},
       defaultLink: () => new shapes.standard.Link(),
       linkPinning: false,
+
+      validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+        return magnetT != null;
+      },
+
     });
 
     //some test agents
     let diagramShapes = new DiagramShapes()
-    let agent = diagramShapes.AGENT('passive', 'Agent1')
-    let port1 = diagramShapes.PORT('port1', 'left')
-    let port2 = diagramShapes.PORT('port2', 'right')
-    agent.addPorts([port1, port2])
-    agent.addTo(this.graph)
+    let agent1 = diagramShapes.AGENT(AgentType.PASSIVE, 'A')
+    let port1 = diagramShapes.PORT('p1', 'right')
+    let port2 = diagramShapes.PORT('p2', 'right')
+    agent1.addPorts([port1, port2])
+    agent1.addTo(this.graph)
+    let agent2 = diagramShapes.AGENT(AgentType.ACTIVE, 'B')
+    let port3 = diagramShapes.PORT('q1', 'left')
+    let port4 = diagramShapes.PORT('q2', 'left')
+    agent2.position(500, 30)
+    agent2.addPorts([port3, port4])
+    agent2.addTo(this.graph)
+
+
 
     paper.on('cell:pointerclick', (cellView: dia.CellView, event: dia.Event): void => {
       let isPort: boolean = $(event.target).attr('port') != null
@@ -122,7 +136,7 @@ export class DiagramComponent implements OnInit {
     document.getElementById("paper").appendChild(paper.el);
   }
 
-  addAgent(type: string): void {
+  addAgent(type: AgentType): void {
     const modalRef = this.modalService.open(AddAgentModalComponent);
     modalRef.componentInstance.graph = this.graph;
     modalRef.componentInstance.type = type
@@ -152,4 +166,6 @@ export class DiagramComponent implements OnInit {
       }
     })
   }
+
+  protected readonly AgentType = AgentType;
 }

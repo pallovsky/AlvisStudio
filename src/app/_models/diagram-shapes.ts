@@ -1,9 +1,10 @@
 import {shapes} from "jointjs";
+import {AgentType} from "./agent-type";
 
 export class DiagramShapes {
-  AGENT(type: string, agentName: string): shapes.standard.Rectangle {
+  AGENT(type: AgentType, agentName: string): shapes.standard.Rectangle {
     let hex = this.getAgentColor(type)
-    return new shapes.standard.Rectangle({
+    let shape = new shapes.standard.Rectangle({
       position: {
         x: 100,
         y: 30
@@ -30,6 +31,21 @@ export class DiagramShapes {
         }
       }
     })
+    if (type == AgentType.ACTIVE) {
+      // rounding corners
+      shape.attr({
+        body: {
+          rx: 10,
+          ry: 10,
+          fill: hex
+        },
+        label: {
+          text: agentName,
+          fill: 'black'
+        }
+      });
+    }
+    return shape;
   }
 
   PORT(portName: string, position: string): object {
@@ -56,7 +72,9 @@ export class DiagramShapes {
       label: {
         position: {
           name: position,
-          args: {y: y}
+          args: {
+            y: y
+          }
         },
         markup: [{
           tagName: 'text',
@@ -74,26 +92,26 @@ export class DiagramShapes {
   private getPortYAxis(position: string): number {
     switch (position) {
       case 'right':
-        return 0
+        return -12
       case 'left':
-        return 0
+        return -12
       case 'top':
         return -18
       case 'bottom':
         return 18
-      default: return 0
+      default:
+        return 0
     }
   }
 
-  private getAgentColor(type: string): string {
+  private getAgentColor(type: AgentType): string {
     switch (type) {
-      case 'active':
+      case AgentType.ACTIVE:
         return '#C2DEDC'
-      case 'passive':
+      case AgentType.PASSIVE:
         return '#ECE5C7'
-      case 'hierarchical':
+      case AgentType.HIERARCHICAL:
         return '#CDC2AE'
-      default: return 'C2DEDC'
     }
   }
 }
