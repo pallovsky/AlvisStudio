@@ -23,6 +23,7 @@
     "@types/file-saver": "^2.0.5",
     "ace-builds": "^1.18.0",
     "bootstrap": "^5.3.0",
+    "canvg": "^4.0.1",
     "file-saver": "^2.0.5",
     "http-server": "^14.1.1",
     "ngx-filesaver": "^15.0.0",

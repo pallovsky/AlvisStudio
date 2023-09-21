@@ -7,6 +7,7 @@ import {AgentType} from "../../_models/agent-type";
 import {GraphService} from "../../_services/graph.service";
 import {Agent} from "../../_models/agent";
 import {Port} from "../../_models/port";
+import {ExportService} from "../../_services/export.service";
 
 @Component({
   selector: 'app-diagram',
@@ -18,7 +19,8 @@ export class DiagramComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private graphService: GraphService
+    private graphService: GraphService,
+    private exportService: ExportService,
   ) {
   }
 
@@ -39,7 +41,6 @@ export class DiagramComponent implements OnInit {
       validateConnection: function (cellViewS, magnetS, cellViewT, magnetT) {
         return magnetT != null && magnetT != magnetS;
       },
-
     });
 
     //some test agents
@@ -93,6 +94,7 @@ export class DiagramComponent implements OnInit {
       linkView.removeTools();
     });
 
+    this.exportService.paper = paper
     document.getElementById("paper").appendChild(paper.el);
   }
 

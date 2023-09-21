@@ -11,7 +11,7 @@ export class NavbarData {
   )
   help: DropdownData = new DropdownData({
       name: 'Help',
-      dividedOptions: [['About Alvis', 'Alvis Docs', 'Alvis Studio Docs']]
+      dividedOptions: [['About Alvis', 'Alvis docs', 'Alvis studio docs']]
     }
   )
 }
