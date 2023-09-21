@@ -7,13 +7,13 @@
 #paper {
   padding: 0;
   height: 100%;
-  width: 75%;
+  width: 83%;
 }
 
 #stencil {
   padding: 0;
   height: 100%;
-  width: 25%;
+  width: 17%;
   border-right: solid 10px black;
   background: conic-gradient(from 90deg at 1px 1px, #f3f4f3 90deg, #bec1c0 0) 0 0/20px 20px;
 }
@@ -34,4 +34,29 @@
   border: 3px solid black;
   margin: 3px;
   display:inline-block;
+}
+
+.btn-active {
+  background-color: #0b3954;
+  border-color: #0b3954;
+}
+
+.btn-passive {
+  background-color: #087e8b;
+  border-color: #087e8b;
+}
+
+.btn-hierarchical {
+  background-color: #86bbd8;
+  border-color: #86bbd8 ;
+}
+
+.btn-add-port {
+  background-color: #370031;
+  border-color: #370031;
+}
+
+.btn-remove-port {
+  background-color: #9e2a2b;
+  border-color: #9e2a2b;
 }

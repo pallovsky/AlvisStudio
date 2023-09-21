@@ -13,6 +13,7 @@ export class EditorService {
     this.aceEditor = editor
     this.aceEditor.setTheme('ace/theme/twilight');
     this.aceEditor.session.setMode('ace/mode/haskell');
+    this.aceEditor.container.style.scrollbarGutter = 'blue'
   }
 
   getValue(): string {

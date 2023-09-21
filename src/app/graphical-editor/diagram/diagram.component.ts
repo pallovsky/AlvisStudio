@@ -61,7 +61,7 @@ export class DiagramComponent implements OnInit {
 
       if (isPort) {
         let portId: string = $(event.target).attr('port');
-        this.graphService.changePortColor(portId, '#FF0000')
+        this.graphService.changePortColor(portId, '#9e2a2b')
         this.selectedPortId = portId
       }
     });

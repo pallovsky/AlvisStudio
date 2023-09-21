@@ -19,7 +19,7 @@ export class DiagramShapes {
         },
         label: {
           text: agentName,
-          fill: 'black'
+          fill: 'white'
         }
       },
       ports: {
@@ -41,7 +41,7 @@ export class DiagramShapes {
         },
         label: {
           text: agentName,
-          fill: 'black'
+          fill: 'white'
         }
       });
     }
@@ -107,11 +107,11 @@ export class DiagramShapes {
   private getAgentColor(type: AgentType): string {
     switch (type) {
       case AgentType.ACTIVE:
-        return '#C2DEDC'
+          return '#0b3954'
       case AgentType.PASSIVE:
-        return '#ECE5C7'
+        return '#087e8b'
       case AgentType.HIERARCHICAL:
-        return '#CDC2AE'
+        return '#86bbd8'
     }
   }
 }
