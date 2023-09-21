@@ -1,0 +1,25 @@
+<div class="modal" style="display: block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Save project</h5>
+        <button type="button" class="btn-close" (click)="onClose()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Project name:</p>
+        <form [formGroup]="projectNameForm">
+          <div class="form-group">
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter name">
+          </div>
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger mt-1">
+            Name is required.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">Save project</button>
+      </div>
+    </div>
+  </div>
+</div>

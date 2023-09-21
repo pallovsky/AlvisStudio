@@ -3,6 +3,7 @@
     {{data.name}}
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <input #fileUpload type="file" (click)="fileUpload.value = null" style="display:none">
     <ng-container *ngFor="let options of data.dividedOptions; index as i">
       <a class="dropdown-item" href="#" *ngFor="let option of options" (click)="onMenuClick(option)">{{option}}</a>
       <div class="dropdown-divider" *ngIf="isLastRow(i)"></div>

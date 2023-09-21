@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DropdownData} from "../../_models/navbar-data";
+import {MenuService} from "../../_services/menu.service";
 
 @Component({
   selector: 'app-navbar-dropdown',
@@ -9,11 +10,14 @@ import {DropdownData} from "../../_models/navbar-data";
 export class NavbarDropdownComponent {
   @Input() data: DropdownData = DropdownData.empty()
 
+  constructor(private menuService: MenuService) {
+  }
+
   isLastRow(index: number): boolean {
     return index != this.data.dividedOptions.length - 1
   }
 
   onMenuClick(option: string) {
-    console.log(option)
+    this.menuService.onClick(option)
   }
 }

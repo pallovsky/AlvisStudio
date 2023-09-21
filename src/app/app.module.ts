@@ -15,6 +15,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from "@angular/forms";
 import { AddPortModalComponent } from './graphical-editor/diagram/add-port-modal/add-port-modal.component';
 import {GraphService} from "./_services/graph.service";
+import {EditorService} from "./_services/editor.service";
+import {MenuService} from "./_services/menu.service";
+import { ProjectNameModalComponent } from './main-view/project-name-modal/project-name-modal.component';
+import {FileSaverModule} from "ngx-filesaver";
 
 @NgModule({
   declarations: [
@@ -26,16 +30,22 @@ import {GraphService} from "./_services/graph.service";
     MainViewComponent,
     DiagramComponent,
     AddAgentModalComponent,
-    AddPortModalComponent
+    AddPortModalComponent,
+    ProjectNameModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgOptimizedImage,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FileSaverModule,
   ],
-  providers: [GraphService],
+  providers: [
+    MenuService,
+    GraphService,
+    EditorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

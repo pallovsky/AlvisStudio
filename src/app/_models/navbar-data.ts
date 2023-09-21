@@ -1,7 +1,7 @@
 export class NavbarData {
   file: DropdownData = new DropdownData({
       name: 'File',
-      dividedOptions: [['New', 'Open file'], ['Save', 'Save as'], ['Preferences']]
+      dividedOptions: [['New', 'Open'], ['Save', 'Save as'], ['Preferences']]
     }
   )
   export: DropdownData = new DropdownData({
