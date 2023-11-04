@@ -43,7 +43,7 @@ export class DiagramComponent implements OnInit {
       },
     });
 
-    //some test agents
+    // Some test agents
     let port1: Port = new Port('p1', 'right')
     let port2: Port = new Port('p2', 'right')
     let agent1: Agent = new Agent('A', AgentType.PASSIVE, [port1, port2])
@@ -54,6 +54,7 @@ export class DiagramComponent implements OnInit {
     let agent2: Agent = new Agent('B', AgentType.ACTIVE, [port3, port4], 500, 30)
     this.graphService.addAgent(agent2)
 
+    // Marking a port with left pointer click in order to delete it.
     paper.on('cell:pointerclick', (cellView: dia.CellView, event: dia.Event): void => {
       let isPort: boolean = $(event.target).attr('port') != null
       if (this.selectedPortId) {
@@ -67,6 +68,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
+    // Unmarking selected port.
     paper.on('blank:pointerclick', (_: dia.Event): void => {
         this.graphService.hideAllTools(paper)
         if (this.selectedPortId) {
@@ -76,6 +78,46 @@ export class DiagramComponent implements OnInit {
       }
     )
 
+    // Creating double-edged link if link already exist between two ports
+    paper.on("link:connect", (linkView: dia.LinkView): void => {
+      const source = linkView.model.get('source');
+      const target = linkView.model.get('target');
+      const links: dia.Link[] = this.graphService.graphInstance.getLinks()
+      const existingLinks: dia.Link[] = links.filter((link: dia.Link) => {
+        return (link.target().port == source.port && link.source().port == target.port) ||
+          (link.source().port == source.port && link.target().port == target.port)
+      })
+      const linkExist: boolean = existingLinks.length == 2
+
+      if (linkExist) {
+        existingLinks.forEach((link: dia.Link) => {
+          link.remove()
+        })
+        let doubleWayLink = new shapes.standard.Link();
+        doubleWayLink.source(source);
+        doubleWayLink.target(target);
+        doubleWayLink.attr({
+          line: {
+            strokeWidth: 2,
+            sourceMarker: {
+              'type': 'path',
+              'stroke': 'black',
+              'fill': 'black',
+              'd': 'M 10 -5 0 0 10 5 Z'
+            },
+            targetMarker: {
+              'type': 'path',
+              'stroke': 'black',
+              'fill': 'black',
+              'd': 'M 10 -5 0 0 10 5 Z'
+            }
+          }
+        });
+        doubleWayLink.addTo(this.graphService.graphInstance)
+      }
+    });
+
+    // Adding tools on element click.
     paper.on('element:pointerclick', (elementView) => {
       if (!elementView.hasTools()) {
         let toolsView = this.graphService.getElementTools()
@@ -85,11 +127,13 @@ export class DiagramComponent implements OnInit {
       }
     });
 
+    // Adding tools on link mouse hover.
     paper.on('link:mouseenter', (linkView) => {
       let toolsView = this.graphService.getLinkTools()
       linkView.addTools(toolsView);
     });
 
+    // Removing tools on mouse leaving link area.
     paper.on('link:mouseleave', function (linkView) {
       linkView.removeTools();
     });
@@ -98,12 +142,18 @@ export class DiagramComponent implements OnInit {
     document.getElementById("paper").appendChild(paper.el);
   }
 
-  addAgent(type: AgentType): void {
+  addAgent(type
+             :
+             AgentType
+  ):
+    void {
     const modalRef = this.modalService.open(AddAgentModalComponent);
     modalRef.componentInstance.type = type
   }
 
-  addPort(): void {
+  addPort()
+    :
+    void {
     this.modalService.open(AddPortModalComponent);
   }
 
@@ -113,5 +163,6 @@ export class DiagramComponent implements OnInit {
     }
   }
 
-  protected readonly AgentType = AgentType;
+  protected readonly
+  AgentType = AgentType;
 }
