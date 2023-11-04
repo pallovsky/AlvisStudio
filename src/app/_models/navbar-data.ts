@@ -6,7 +6,7 @@ export class NavbarData {
   )
   export: DropdownData = new DropdownData({
       name: 'Export',
-      dividedOptions: [['Export to EPS', 'Export to SVG', 'Export to PNG']]
+      dividedOptions: [['Export to EPS', 'Export to SVG', 'Export to PNG', 'Export to XML']]
     }
   )
   help: DropdownData = new DropdownData({

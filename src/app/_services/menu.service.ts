@@ -64,6 +64,11 @@ export class MenuService {
         break
       }
 
+      case MenuOptions.EXPORT_TO_XML: {
+        this.exportService.exportToXML()
+        break
+      }
+
       case MenuOptions.ABOUT_ALVIS: {
         window.open('https://alvis.kis.agh.edu.pl/wiki/alvis:start')
         break
@@ -83,6 +88,7 @@ enum MenuOptions {
   EXPORT_TO_EPS = 6,
   EXPORT_TO_SVG = 7,
   EXPORT_TO_PNG = 8,
+  EXPORT_TO_XML = 9,
 }
 
 namespace MenuOptions {
@@ -106,6 +112,8 @@ namespace MenuOptions {
         return MenuOptions.EXPORT_TO_SVG
       case 'Export to PNG':
         return MenuOptions.EXPORT_TO_PNG
+      case 'Export to XML':
+        return MenuOptions.EXPORT_TO_XML
       default:
         return MenuOptions[option]
     }
