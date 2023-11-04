@@ -68,7 +68,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    // Unmarking selected port.
+    // Un-marking selected port.
     paper.on('blank:pointerclick', (_: dia.Event): void => {
         this.graphService.hideAllTools(paper)
         if (this.selectedPortId) {
@@ -142,27 +142,20 @@ export class DiagramComponent implements OnInit {
     document.getElementById("paper").appendChild(paper.el);
   }
 
-  addAgent(type
-             :
-             AgentType
-  ):
-    void {
+  addAgent(type: AgentType): void {
     const modalRef = this.modalService.open(AddAgentModalComponent);
     modalRef.componentInstance.type = type
   }
 
-  addPort()
-    :
-    void {
+  addPort(): void {
     this.modalService.open(AddPortModalComponent);
   }
 
-  removePort() {
+  removePort(): void {
     if (this.selectedPortId) {
       this.graphService.removePort(this.selectedPortId)
     }
   }
 
-  protected readonly
-  AgentType = AgentType;
+  protected readonly AgentType = AgentType;
 }

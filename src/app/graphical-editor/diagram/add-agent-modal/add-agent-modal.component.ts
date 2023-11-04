@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AgentType} from "../../../_models/agent-type";
 import {GraphService} from "../../../_services/graph.service";
 import {Agent} from "../../../_models/agent";
+import {EditorService} from "../../../_services/editor.service";
 
 @Component({
   selector: 'app-add-agent-modal',
@@ -16,6 +17,7 @@ export class AddAgentModalComponent {
   constructor(
     private modal: NgbActiveModal,
     private graphService: GraphService,
+    private editorService: EditorService,
   ) {
   }
 
@@ -27,6 +29,7 @@ export class AddAgentModalComponent {
     let agentName: string = this.agentNameForm.value.name
     let agent: Agent = new Agent(agentName, this.type)
     this.graphService.addAgent(agent)
+    this.editorService.addAgent(agentName)
     this.modal.close()
   }
 
