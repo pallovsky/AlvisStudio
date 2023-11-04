@@ -67,8 +67,6 @@ export class GraphService {
   getLinkTools() {
     let verticesTool = new linkTools.Vertices();
     let segmentsTool = new linkTools.Segments();
-    let sourceArrowheadTool = new linkTools.SourceArrowhead();
-    let targetArrowheadTool = new linkTools.TargetArrowhead();
     let sourceAnchorTool = new linkTools.SourceAnchor();
     let targetAnchorTool = new linkTools.TargetAnchor();
     let boundaryTool = new linkTools.Boundary();
@@ -77,7 +75,6 @@ export class GraphService {
     return new dia.ToolsView({
       tools: [
         verticesTool, segmentsTool,
-        sourceArrowheadTool, targetArrowheadTool,
         sourceAnchorTool, targetAnchorTool,
         boundaryTool, removeButton
       ]
