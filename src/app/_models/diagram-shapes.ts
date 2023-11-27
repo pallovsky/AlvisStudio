@@ -110,8 +110,6 @@ export class DiagramShapes {
           return '#0b3954'
       case AgentType.PASSIVE:
         return '#087e8b'
-      case AgentType.HIERARCHICAL:
-        return '#86bbd8'
     }
   }
 }
