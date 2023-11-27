@@ -8,6 +8,7 @@ import {GraphService} from "../../_services/graph.service";
 import {Agent} from "../../_models/agent";
 import {Port} from "../../_models/port";
 import {ExportService} from "../../_services/export.service";
+import {ProjectData} from "../../_models/project-data";
 
 @Component({
   selector: 'app-diagram',
@@ -43,16 +44,12 @@ export class DiagramComponent implements OnInit {
       },
     });
 
-    // Some test agents
-    let port1: Port = new Port('p1', 'right')
-    let port2: Port = new Port('p2', 'right')
-    let agent1: Agent = new Agent('A', AgentType.PASSIVE, [port1, port2])
-    this.graphService.addAgent(agent1)
-
-    let port3: Port = new Port('q1', 'left')
-    let port4: Port = new Port('q2', 'left')
-    let agent2: Agent = new Agent('B', AgentType.ACTIVE, [port3, port4], 500, 30)
-    this.graphService.addAgent(agent2)
+    // Loading graph if project exists
+    let currentProjectExist: boolean = localStorage.getItem('project-data') != null
+    if (currentProjectExist) {
+      let projectData: ProjectData = JSON.parse(localStorage.getItem('project-data')) as ProjectData
+      this.graphService.graphInstance.fromJSON(projectData.graph)
+    }
 
     // Marking a port with left pointer click in order to delete it.
     paper.on('cell:pointerclick', (cellView: dia.CellView, event: dia.Event): void => {
@@ -120,6 +117,7 @@ export class DiagramComponent implements OnInit {
     // Adding tools on element click.
     paper.on('element:pointerclick', (elementView) => {
       if (!elementView.hasTools()) {
+        this.graphService.hideAllTools(paper)
         let toolsView = this.graphService.getElementTools()
         elementView.addTools(toolsView);
       } else {

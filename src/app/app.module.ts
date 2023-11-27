@@ -19,6 +19,7 @@ import {EditorService} from "./_services/editor.service";
 import {MenuService} from "./_services/menu.service";
 import { ProjectNameModalComponent } from './main-view/project-name-modal/project-name-modal.component';
 import {FileSaverModule} from "ngx-filesaver";
+import { FileSavedModalComponent } from './main-view/project-name-modal/file-saved-modal/file-saved-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {FileSaverModule} from "ngx-filesaver";
     DiagramComponent,
     AddAgentModalComponent,
     AddPortModalComponent,
-    ProjectNameModalComponent
+    ProjectNameModalComponent,
+    FileSavedModalComponent
   ],
   imports: [
     BrowserModule,

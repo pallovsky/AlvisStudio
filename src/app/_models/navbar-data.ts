@@ -1,12 +1,12 @@
 export class NavbarData {
   file: DropdownData = new DropdownData({
       name: 'File',
-      dividedOptions: [['New', 'Open'], ['Save as'], ['Preferences']]
+      dividedOptions: [['New', 'Open'], ['Save', 'Save as']]
     }
   )
   export: DropdownData = new DropdownData({
       name: 'Export',
-      dividedOptions: [['Export to EPS', 'Export to SVG', 'Export to PNG', 'Export to XML']]
+      dividedOptions: [['Export to JSON', 'Export to EPS', 'Export to SVG', 'Export to PNG', 'Export to XML']]
     }
   )
   help: DropdownData = new DropdownData({

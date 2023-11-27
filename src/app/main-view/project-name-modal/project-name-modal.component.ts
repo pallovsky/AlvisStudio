@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProjectData} from "../../_models/project-data";
-import {FileSaverService} from "ngx-filesaver";
 
 @Component({
   selector: 'app-project-name-modal',
@@ -12,10 +11,7 @@ import {FileSaverService} from "ngx-filesaver";
 export class ProjectNameModalComponent {
   @Input() currentProjectData: ProjectData
 
-  constructor(
-    private modal: NgbActiveModal,
-    private fileSaver: FileSaverService,
-  ) {
+  constructor(private modal: NgbActiveModal,) {
   }
 
   projectNameForm: FormGroup = new FormGroup({
@@ -23,9 +19,8 @@ export class ProjectNameModalComponent {
   });
 
   onSave(): void {
-    let newProjectName: string = this.projectNameForm.value.name
-    let blob: Blob = new Blob([JSON.stringify(this.currentProjectData)], { type: 'text/plain;charset=utf-8' })
-    this.fileSaver.save(blob, newProjectName + '.json');
+    this.currentProjectData.name = this.projectNameForm.value.name
+    localStorage.setItem('project-data', JSON.stringify(this.currentProjectData))
     this.modal.close()
   }
 

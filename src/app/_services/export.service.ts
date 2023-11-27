@@ -3,6 +3,7 @@ import {dia, g} from "jointjs";
 import {FileSaverService} from "ngx-filesaver";
 import {GraphService} from "./graph.service";
 import {EditorService} from "./editor.service";
+import {ProjectData} from "../_models/project-data";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,12 @@ export class ExportService {
 
     let blob: Blob = new Blob([xml], {type: 'application/xml'})
     this.fileSaver.save(blob, 'export' + '.alvis');
+  }
+
+  exportToJson(): void {
+    let currentProjectData: ProjectData = new ProjectData(null, this.graphService.graphInstance.toJSON(), this.editorService.getValue())
+    let blob: Blob = new Blob([JSON.stringify(currentProjectData)], { type: 'text/plain;charset=utf-8' })
+    this.fileSaver.save(blob, 'export' + '.json');
   }
 
   private getGraphXml(graph: dia.Graph): string {

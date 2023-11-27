@@ -5,6 +5,7 @@ import {ProjectData} from "../_models/project-data";
 import {ProjectNameModalComponent} from "../main-view/project-name-modal/project-name-modal.component";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "./export.service";
+import {FileSavedModalComponent} from "../main-view/project-name-modal/file-saved-modal/file-saved-modal.component";
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,27 @@ export class MenuService {
       case MenuOptions.NEW: {
         this.graphService.graphInstance.clear()
         this.editorService.clear()
+        localStorage.clear()
         break
       }
+      case MenuOptions.SAVE: {
+        let currentProjectExist: boolean = localStorage.getItem('project-data') != null
+        let currentProjectData: ProjectData = new ProjectData(null, this.graphService.graphInstance.toJSON(), this.editorService.getValue())
+
+        if (currentProjectExist) {
+          let savedProject: ProjectData = JSON.parse(localStorage.getItem('project-data'))
+          currentProjectData.name = savedProject.name
+          localStorage.setItem('project-data', JSON.stringify(currentProjectData))
+          this.modalService.open(FileSavedModalComponent);
+          break
+        } else {
+          const modalRef: NgbModalRef = this.modalService.open(ProjectNameModalComponent);
+          modalRef.componentInstance.currentProjectData = currentProjectData;
+          break
+        }
+      }
       case MenuOptions.SAVE_AS: {
-        let currentProjectData: ProjectData = new ProjectData(this.graphService.graphInstance.toJSON(), this.editorService.getValue())
+        let currentProjectData: ProjectData = new ProjectData(null, this.graphService.graphInstance.toJSON(), this.editorService.getValue())
         const modalRef: NgbModalRef = this.modalService.open(ProjectNameModalComponent);
         modalRef.componentInstance.currentProjectData = currentProjectData
         break
@@ -69,6 +87,11 @@ export class MenuService {
         break
       }
 
+      case MenuOptions.EXPORT_TO_JSON: {
+        this.exportService.exportToJson()
+        break
+      }
+
       case MenuOptions.ABOUT_ALVIS: {
         window.open('https://alvis.kis.agh.edu.pl/wiki/alvis:start')
         break
@@ -81,14 +104,16 @@ export class MenuService {
 enum MenuOptions {
   NEW = 0,
   OPEN = 1,
-  SAVE_AS = 2,
-  ABOUT_ALVIS= 3,
-  ALVIS_DOCS = 4,
-  ALVIS_STUDIO_DOCS = 5,
-  EXPORT_TO_EPS = 6,
-  EXPORT_TO_SVG = 7,
-  EXPORT_TO_PNG = 8,
-  EXPORT_TO_XML = 9,
+  SAVE = 2,
+  SAVE_AS = 3,
+  ABOUT_ALVIS = 4,
+  ALVIS_DOCS = 5,
+  ALVIS_STUDIO_DOCS = 6,
+  EXPORT_TO_EPS = 7,
+  EXPORT_TO_SVG = 8,
+  EXPORT_TO_PNG = 9,
+  EXPORT_TO_XML = 10,
+  EXPORT_TO_JSON = 11,
 }
 
 namespace MenuOptions {
@@ -96,6 +121,8 @@ namespace MenuOptions {
     switch (option) {
       case 'New':
         return MenuOptions.NEW
+      case 'Save':
+        return MenuOptions.SAVE
       case 'Save as':
         return MenuOptions.SAVE_AS
       case 'Open':
@@ -114,6 +141,8 @@ namespace MenuOptions {
         return MenuOptions.EXPORT_TO_PNG
       case 'Export to XML':
         return MenuOptions.EXPORT_TO_XML
+      case 'Export to JSON':
+        return MenuOptions.EXPORT_TO_JSON
       default:
         return MenuOptions[option]
     }
