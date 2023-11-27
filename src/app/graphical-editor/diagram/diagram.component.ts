@@ -5,10 +5,9 @@ import {AddPortModalComponent} from "./add-port-modal/add-port-modal.component";
 import {dia, shapes} from "jointjs"
 import {AgentType} from "../../_models/agent-type";
 import {GraphService} from "../../_services/graph.service";
-import {Agent} from "../../_models/agent";
-import {Port} from "../../_models/port";
 import {ExportService} from "../../_services/export.service";
 import {ProjectData} from "../../_models/project-data";
+import {Agent} from "../../_models/agent";
 
 @Component({
   selector: 'app-diagram',
@@ -17,6 +16,7 @@ import {ProjectData} from "../../_models/project-data";
 })
 export class DiagramComponent implements OnInit {
   selectedPortId = null
+  selectedElement: dia.Element = null
 
   constructor(
     private modalService: NgbModal,
@@ -68,6 +68,7 @@ export class DiagramComponent implements OnInit {
     // Un-marking selected port.
     paper.on('blank:pointerclick', (_: dia.Event): void => {
         this.graphService.hideAllTools(paper)
+        this.selectedElement = null
         if (this.selectedPortId) {
           this.graphService.changePortColor(this.selectedPortId, '#023047')
           this.selectedPortId = null
@@ -119,8 +120,10 @@ export class DiagramComponent implements OnInit {
       if (!elementView.hasTools()) {
         this.graphService.hideAllTools(paper)
         let toolsView = this.graphService.getElementTools()
+        this.selectedElement = elementView.model
         elementView.addTools(toolsView);
       } else {
+        this.selectedElement = null
         elementView.removeTools()
       }
     });
@@ -147,6 +150,17 @@ export class DiagramComponent implements OnInit {
 
   addPort(): void {
     this.modalService.open(AddPortModalComponent);
+  }
+
+  copyAgent() {
+    if (this.selectedElement) {
+      let elementToCopy = this.selectedElement.clone()
+      let isActive: boolean = elementToCopy.attributes.attrs['body']['rx'] != undefined
+      let agentName: string = elementToCopy.attributes.attrs['label']['text']
+      console.log(elementToCopy.size().width)
+      let copiedAgent: Agent = new Agent(agentName, isActive ? AgentType.ACTIVE : AgentType.PASSIVE, [], elementToCopy.size().width, elementToCopy.size().height)
+      this.graphService.addAgent(copiedAgent)
+    }
   }
 
   removePort(): void {

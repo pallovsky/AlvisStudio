@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {dia, elementTools, linkTools, shapes} from "jointjs";
 import {DiagramShapes} from "../_models/diagram-shapes";
 import {Agent} from "../_models/agent";
@@ -15,7 +15,7 @@ export class GraphService {
   constructor() { }
 
   addAgent(agent: Agent) {
-    let newAgent = this.diagramShapes.AGENT(agent.type, agent.name, agent.x, agent.y)
+    let newAgent = this.diagramShapes.AGENT(agent.type, agent.name, agent.width, agent.height)
     let ports = agent.ports.map((port: Port) => this.diagramShapes.PORT(port.name, port.position))
     newAgent.addPorts(ports)
     newAgent.addTo(this.graph)
