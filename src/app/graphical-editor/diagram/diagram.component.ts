@@ -156,7 +156,7 @@ export class DiagramComponent implements OnInit {
     if (this.selectedElement) {
       let elementToCopy = this.selectedElement.clone()
       let isActive: boolean = elementToCopy.attributes.attrs['body']['rx'] != undefined
-      let agentName: string = elementToCopy.attributes.attrs['label']['text']
+      let agentName: string = this.getAgentName(elementToCopy)
       console.log(elementToCopy.size().width)
       let copiedAgent: Agent = new Agent(agentName, isActive ? AgentType.ACTIVE : AgentType.PASSIVE, [], elementToCopy.size().width, elementToCopy.size().height)
       this.graphService.addAgent(copiedAgent)
@@ -169,5 +169,20 @@ export class DiagramComponent implements OnInit {
     }
   }
 
-  protected readonly AgentType = AgentType;
+  private getAgentName(element: dia.Element): string {
+    let agentNames:  string[] = this.graphService.getAgentNames()
+    let index: number = 1
+    while (true) {
+      let agentName: string = element.attributes.attrs['label']['text'] + index.toString()
+      let nameExist: boolean = agentNames.indexOf(agentName) > -1
+      if (!nameExist) {
+        return agentName
+      } else {
+        index++
+    }
+  }
+}
+
+protected readonly
+AgentType = AgentType;
 }
